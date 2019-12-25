@@ -49,7 +49,7 @@ public final class MysqlJdbc {
             DB_PASSWORD="study";
 
             if (devMode) {
-                DB_PATH = "207.148.106.40:3306"+ "/" + DB_NAME;
+                DB_PATH = "127.0.0.1:3306"+ "/" + DB_NAME;
                 DB_SRC = "jdbc:mysql://" + DB_PATH;
             }
 
