@@ -60,8 +60,8 @@ public class Bootstrap implements BladeLoader {
         if (blade.environment().hasKey("app.devMode")) {
             devMode = blade.environment().getBoolean("app.devMode", true);
         }
-        SqliteJdbc.importSql(devMode);
-        Anima.open(SqliteJdbc.DB_SRC);
+        MysqlJdbc.importSql(devMode);
+        Anima.open(MysqlJdbc.DB_SRC,MysqlJdbc.DB_USERNAME,MysqlJdbc.DB_PASSWORD);
         Commons.setSiteService(ioc.getBean(SiteService.class));
     }
 

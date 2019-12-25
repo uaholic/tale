@@ -7,7 +7,7 @@ import com.blade.kit.BladeKit;
 import com.blade.kit.DateKit;
 import com.blade.kit.EncryptKit;
 import com.blade.kit.StringKit;
-import com.tale.bootstrap.SqliteJdbc;
+import com.tale.bootstrap.MysqlJdbc;
 import com.tale.bootstrap.TaleConst;
 import com.tale.model.dto.*;
 import com.tale.model.entity.*;
@@ -106,7 +106,7 @@ public class SiteService {
         // 随机文章
         if (Types.RANDOM_ARTICLE.equals(type)) {
             List<Integer> cids = select().bySQL(Integer.class,
-                                                "select cid from t_contents where type = ? and status = ? order by random() * cid limit ?",
+                                                "select cid from t_contents where type = ? and status = ? order by rand() * cid limit ?",
                                                 Types.ARTICLE, Types.PUBLISH, limit).all();
             if (BladeKit.isNotEmpty(cids)) {
                 return select().from(Contents.class).in(Contents::getCid, cids).all();
@@ -152,7 +152,7 @@ public class SiteService {
      */
     public List<Archive> getArchives() {
         String sql =
-            "select strftime('%Y年%m月', datetime(created, 'unixepoch') ) as date_str, count(*) as count  from t_contents "
+            "select from_unixtime(created, '%Y年%m月') as date_str, count(*) as count  from t_contents "
                 +
                 "where type = 'post' and status = 'publish' group by date_str order by date_str desc";
 
@@ -229,7 +229,7 @@ public class SiteService {
                 + StringKit.rand(8) + ".db";
             String cp = CLASSPATH + filePath;
             Files.createDirectory(Paths.get(cp));
-            Files.copy(Paths.get(SqliteJdbc.DB_PATH), Paths.get(cp));
+            Files.copy(Paths.get(MysqlJdbc.DB_PATH), Paths.get(cp));
             backResponse.setSql_path("/" + filePath);
             // 10秒后删除备份文件
             new Timer().schedule(new TimerTask() {
@@ -268,7 +268,7 @@ public class SiteService {
         // 随机获取项目
         if (Types.RANDOM_META.equals(searchType)) {
             List<Integer> mids = select().bySQL(Integer.class,
-                                                "select mid from t_metas where type = ? order by random() * mid limit ?",
+                                                "select mid from t_metas where type = ? order by rand() * mid limit ?",
                                                 type, limit).all();
             if (BladeKit.isNotEmpty(mids)) {
                 String in = TaleUtils.listToInSql(mids);
