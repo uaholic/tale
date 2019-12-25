@@ -11,7 +11,7 @@
  Target Server Version : 50644
  File Encoding         : 65001
 
- Date: 25/12/2019 22:39:41
+ Date: 26/12/2019 00:18:53
 */
 
 SET NAMES utf8mb4;
@@ -174,7 +174,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_users`;
 CREATE TABLE `t_users` (
-  `uid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) COLLATE utf8_bin NOT NULL,
   `password` varchar(64) COLLATE utf8_bin NOT NULL,
   `email` varchar(100) COLLATE utf8_bin DEFAULT NULL,

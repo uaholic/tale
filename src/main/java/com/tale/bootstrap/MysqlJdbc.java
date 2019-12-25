@@ -50,7 +50,7 @@ public final class MysqlJdbc {
 
             if (devMode) {
                 DB_PATH = "127.0.0.1:3306"+ "/" + DB_NAME;
-                DB_SRC = "jdbc:mysql://" + DB_PATH;
+                DB_SRC = "jdbc:mysql://" + DB_PATH+"?useUnicode=true&characterEncoding=utf-8";
             }
 
             log.info("blade dev mode: {}", devMode);
